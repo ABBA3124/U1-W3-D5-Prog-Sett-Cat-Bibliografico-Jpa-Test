@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.davideabbadessa.entities.ElementoCatalogo;
 
+import java.util.List;
+
 public class ElementoCatalogoDAO {
     private EntityManager em;
 
@@ -50,5 +52,17 @@ public class ElementoCatalogoDAO {
             return null;
         }
     }
+
+    public List<ElementoCatalogo> trovaElementiPerAnno(int annoPubblicazione) {
+        try {
+            return em.createQuery("SELECT e FROM ElementoCatalogo e WHERE e.annoPubblicazione = :annoPubblicazione", ElementoCatalogo.class)
+                    .setParameter("annoPubblicazione", annoPubblicazione)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

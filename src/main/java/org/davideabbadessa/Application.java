@@ -6,6 +6,8 @@ import jakarta.persistence.Persistence;
 import org.davideabbadessa.dao.ElementoCatalogoDAO;
 import org.davideabbadessa.entities.ElementoCatalogo;
 
+import java.util.List;
+
 public class Application {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("U1-W3-D5-Prog-Sett-Cat-Bibliografico-Jpa-Test");
@@ -57,6 +59,18 @@ public class Application {
         }
 
         /*---------------------------------------------Ricerca per anno pubblicazione-------------------------------------------*/
+
+        //ricerca elementi per anno di pubblicazione
+        List<ElementoCatalogo> elementi = dao.trovaElementiPerAnno(2025);
+        if (elementi != null && !elementi.isEmpty()) {
+            System.out.println("Elementi trovati per l'anno: ");
+            for (ElementoCatalogo e : elementi) {
+                System.out.println("- " + e.getTitolo());
+            }
+        } else {
+            System.out.println("Nessun elemento trovato per l'anno inserito.");
+        }
+
 
     }
 }
