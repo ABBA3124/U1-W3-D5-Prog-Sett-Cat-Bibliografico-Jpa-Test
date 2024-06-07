@@ -7,21 +7,17 @@ import java.util.UUID;
 
 @Entity
 public class Utente {
+    @Column(nullable = false, unique = true)
+    private static UUID numeroTessera;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
     @Column(nullable = false)
     private String nome;
-
     @Column(nullable = false)
     private String cognome;
-
     @Column(nullable = false)
     private LocalDate dataNascita;
-
-    @Column(nullable = false, unique = true)
-    private UUID numeroTessera;
 
 
     public Utente() {
@@ -34,10 +30,17 @@ public class Utente {
         this.numeroTessera = numeroTessera;
     }
 
+    public static UUID getNumeroTessera() {
+        return numeroTessera;
+    }
+
+    public void setNumeroTessera(UUID numeroTessera) {
+        this.numeroTessera = numeroTessera;
+    }
+
     public UUID getId() {
         return id;
     }
-
 
     public String getNome() {
         return nome;
@@ -61,14 +64,6 @@ public class Utente {
 
     public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
-    }
-
-    public UUID getNumeroTessera() {
-        return numeroTessera;
-    }
-
-    public void setNumeroTessera(UUID numeroTessera) {
-        this.numeroTessera = numeroTessera;
     }
 
     @Override

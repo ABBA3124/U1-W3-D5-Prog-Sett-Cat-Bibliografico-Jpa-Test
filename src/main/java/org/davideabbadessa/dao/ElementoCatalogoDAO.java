@@ -77,5 +77,14 @@ public class ElementoCatalogoDAO {
         }
     }
 
-
+    public List<ElementoCatalogo> trovaElementiPerTitolo(String titolo) {
+        try {
+            return em.createQuery("SELECT e FROM ElementoCatalogo e WHERE e.titolo LIKE :titolo", ElementoCatalogo.class)
+                    .setParameter("titolo", "%" + titolo + "%")
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

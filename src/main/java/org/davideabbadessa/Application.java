@@ -4,10 +4,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.davideabbadessa.dao.ElementoCatalogoDAO;
-import org.davideabbadessa.entities.ElementoCatalogo;
-import org.davideabbadessa.entities.Libro;
+import org.davideabbadessa.dao.PrestitoDAO;
+import org.davideabbadessa.entities.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class Application {
     public static void main(String[] args) {
@@ -16,31 +18,53 @@ public class Application {
         EntityManager em = emf.createEntityManager();
 
         ElementoCatalogoDAO dao = new ElementoCatalogoDAO(em);
+        PrestitoDAO prestitoDao = new PrestitoDAO(em);
 
         /*--------------------------------------------Aggiunta di un elemento del catalogo-------------------------------------------*/
 
         //aggiugno un libro
 
-//        Libro libro = new Libro();
-//        libro.setCodiceISBN("65411");
-//        libro.setTitolo("Java Programming");
-//        libro.setAnnoPubblicazione(2025);
-//        libro.setNumeroPagine(20);
-//        libro.setAutore("i");
-//        libro.setGenere("Programming");
-//        dao.aggiungiElemento(libro);
-//        System.out.println(libro + " okok libro ");
-//
+        Libro libro = new Libro();
+        libro.setCodiceISBN("54111");
+        libro.setTitolo("Java Programming");
+        libro.setAnnoPubblicazione(2025);
+        libro.setNumeroPagine(20);
+        libro.setAutore("iufhgvh");
+        libro.setGenere("Programming");
+        dao.aggiungiElemento(libro);
+        System.out.println(libro + " okok libro ");
+
         //aggiungo una rivista
 
-//        Rivista rivista = new Rivista();
-//        rivista.setCodiceISBN("61564156411");
-//        rivista.setTitolo("nuova rivista 5");
-//        rivista.setAnnoPubblicazione(2031);
-//        rivista.setNumeroPagine(36);
-//        rivista.setPeriodicita(Periodicita.MENSILE);
-//        dao.aggiungiElemento(rivista);
-//        System.out.println(rivista + " okok rivista ");
+        Rivista rivista = new Rivista();
+        rivista.setCodiceISBN("61556411");
+        rivista.setTitolo("nuova rivista 5");
+        rivista.setAnnoPubblicazione(2031);
+        rivista.setNumeroPagine(36);
+        rivista.setPeriodicita(Periodicita.MENSILE);
+        dao.aggiungiElemento(rivista);
+        System.out.println(rivista + " okok rivista ");
+
+        // Aggiungi un utente
+        Utente utente = new Utente();
+        utente.setNumeroTessera(UUID.randomUUID());
+        utente.setNome("davide ");
+        utente.setCognome("abbadessa");
+        utente.setDataNascita(LocalDate.of(1999, 3, 2));
+        em.getTransaction().begin();
+        em.persist(utente);
+        em.getTransaction().commit();
+        System.out.println(utente + " okok utente ");
+
+
+        // Aggiungi un prestito
+        Prestito prestito = new Prestito();
+        prestito.setUtente(utente);
+        prestito.setElementoPrestato(libro);
+        prestito.setDataInizioPrestito(LocalDate.now());
+        prestito.setDataRestituzionePrevista(LocalDate.now().plusDays(30));
+        PrestitoDAO.aggiungiPrestito(prestito);
+        System.out.println(prestito + " okok prestito ");
 
 
         /*-------------------------------------------Rimozione di un elemento del catalogo dato un codice ISBN-------------------------------------------*/
@@ -85,7 +109,32 @@ public class Application {
         }
 
         /*-----------------------------------------------Ricerca per titolo o parte di esso-------------------------------------------*/
-        
+        //ricerca elementi per titolo o parte di esso
+        List<ElementoCatalogo> elementiTitolo = dao.trovaElementiPerTitolo("Java");
+        if (elementiTitolo != null && !elementiTitolo.isEmpty()) {
+            System.out.println("Elementi trovati per ricerca titolo: ");
+            for (ElementoCatalogo e : elementiTitolo) {
+                System.out.println("- " + e.getTitolo());
+            }
+        } else {
+            System.out.println("Nessun elemento trovato per ricerca titolo.");
+        }
 
+        /*-----------------------------------------------Ricerca degli elementi attualmente in prestito dato un numero di tessera utente-------------------------------------------*/
+
+        //ricerca prestiti per numero di tessera
+        List<Prestito> prestiti = prestitoDao.trovaPrestitiPerNumeroTessera(utente.getNumeroTessera());
+        if (prestiti != null && !prestiti.isEmpty()) {
+            System.out.println("Prestiti trovati per numero di tessera " + utente.getNumeroTessera() + ":");
+            for (Prestito p : prestiti) {
+                System.out.println("- " + p.getElementoPrestato().getTitolo());
+            }
+        } else {
+            System.out.println("Nessun prestito trovato per numero di tessera " + utente.getNumeroTessera() + ".");
+        }
+
+        /*------------------------------------------------Ricerca di tutti i prestiti scaduti e non ancora restituiti-------------------------------------------*/
+
+        
     }
 }
