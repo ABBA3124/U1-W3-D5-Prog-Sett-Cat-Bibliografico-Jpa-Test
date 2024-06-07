@@ -3,12 +3,13 @@ package org.davideabbadessa.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 public class Utente {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(nullable = false)
     private String nome;
@@ -20,20 +21,20 @@ public class Utente {
     private LocalDate dataNascita;
 
     @Column(nullable = false, unique = true)
-    private String numeroTessera;
+    private UUID numeroTessera;
 
 
     public Utente() {
     }
 
-    public Utente(String nome, String cognome, LocalDate dataNascita, String numeroTessera) {
+    public Utente(String nome, String cognome, LocalDate dataNascita, UUID numeroTessera) {
         this.nome = nome;
         this.cognome = cognome;
         this.dataNascita = dataNascita;
         this.numeroTessera = numeroTessera;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -62,11 +63,11 @@ public class Utente {
         this.dataNascita = dataNascita;
     }
 
-    public String getNumeroTessera() {
+    public UUID getNumeroTessera() {
         return numeroTessera;
     }
 
-    public void setNumeroTessera(String numeroTessera) {
+    public void setNumeroTessera(UUID numeroTessera) {
         this.numeroTessera = numeroTessera;
     }
 

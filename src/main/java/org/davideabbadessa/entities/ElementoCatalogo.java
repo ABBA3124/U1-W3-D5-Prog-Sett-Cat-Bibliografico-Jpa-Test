@@ -2,13 +2,15 @@ package org.davideabbadessa.entities;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ElementoCatalogo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String codiceISBN;
@@ -34,7 +36,7 @@ public abstract class ElementoCatalogo {
         this.numeroPagine = numeroPagine;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

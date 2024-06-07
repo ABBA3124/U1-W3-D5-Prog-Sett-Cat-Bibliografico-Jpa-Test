@@ -3,12 +3,13 @@ package org.davideabbadessa.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 public class Prestito {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -44,7 +45,7 @@ public class Prestito {
         this.dataRestituzionePrevista = this.dataInizioPrestito.plusDays(30);
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
