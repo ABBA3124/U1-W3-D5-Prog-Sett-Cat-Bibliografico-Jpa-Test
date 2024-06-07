@@ -3,6 +3,7 @@ package org.davideabbadessa.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.davideabbadessa.entities.ElementoCatalogo;
+import org.davideabbadessa.entities.Libro;
 
 import java.util.List;
 
@@ -57,6 +58,18 @@ public class ElementoCatalogoDAO {
         try {
             return em.createQuery("SELECT e FROM ElementoCatalogo e WHERE e.annoPubblicazione = :annoPubblicazione", ElementoCatalogo.class)
                     .setParameter("annoPubblicazione", annoPubblicazione)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public List<Libro> trovaElementiPerAutore(String autore) {
+        try {
+            return em.createQuery("SELECT l FROM Libro l WHERE l.autore = :autore", Libro.class)
+                    .setParameter("autore", autore)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();

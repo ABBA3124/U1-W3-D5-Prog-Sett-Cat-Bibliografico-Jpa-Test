@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.davideabbadessa.dao.ElementoCatalogoDAO;
 import org.davideabbadessa.entities.ElementoCatalogo;
+import org.davideabbadessa.entities.Libro;
 
 import java.util.List;
 
@@ -71,6 +72,20 @@ public class Application {
             System.out.println("Nessun elemento trovato per l'anno inserito.");
         }
 
+        /*----------------------------------------------Ricerca per autore-------------------------------------------*/
+        //ricerca elementi per autore
+        List<Libro> elementiAutore = dao.trovaElementiPerAutore("davide vulpinari");
+        if (elementiAutore != null && !elementiAutore.isEmpty()) {
+            System.out.println("Elementi trovati per autore: ");
+            for (ElementoCatalogo e : elementiAutore) {
+                System.out.println("- " + e.getTitolo());
+            }
+        } else {
+            System.out.println("Nessun elemento trovato per l'autore cercato.");
+        }
+
+        /*-----------------------------------------------Ricerca per titolo o parte di esso-------------------------------------------*/
+        
 
     }
 }
