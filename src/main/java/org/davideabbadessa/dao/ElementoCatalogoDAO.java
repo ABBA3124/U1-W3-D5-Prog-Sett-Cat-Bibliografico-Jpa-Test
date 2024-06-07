@@ -39,4 +39,16 @@ public class ElementoCatalogoDAO {
             e.printStackTrace();
         }
     }
+
+    public ElementoCatalogo trovaElementoPerISBN(String codiceISBN) {
+        try {
+            return em.createQuery("SELECT e FROM ElementoCatalogo e WHERE e.codiceISBN = :codiceISBN", ElementoCatalogo.class)
+                    .setParameter("codiceISBN", codiceISBN)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

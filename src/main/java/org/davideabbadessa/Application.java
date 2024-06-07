@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.davideabbadessa.dao.ElementoCatalogoDAO;
+import org.davideabbadessa.entities.ElementoCatalogo;
 
 public class Application {
     public static void main(String[] args) {
@@ -15,7 +16,8 @@ public class Application {
 
         /*--------------------------------------------Aggiunta di un elemento del catalogo-------------------------------------------*/
 
-//        //aggiugno un libro
+        //aggiugno un libro
+
 //        Libro libro = new Libro();
 //        libro.setCodiceISBN("65411");
 //        libro.setTitolo("Java Programming");
@@ -26,7 +28,8 @@ public class Application {
 //        dao.aggiungiElemento(libro);
 //        System.out.println(libro + " okok libro ");
 //
-//        //aggiungo una rivista
+        //aggiungo una rivista
+
 //        Rivista rivista = new Rivista();
 //        rivista.setCodiceISBN("61564156411");
 //        rivista.setTitolo("nuova rivista 5");
@@ -40,9 +43,20 @@ public class Application {
         /*-------------------------------------------Rimozione di un elemento del catalogo dato un codice ISBN-------------------------------------------*/
 
         //rimuovo un elementocatalogo tramite ISBN
+
         dao.rimuoviElemento("16516514");
 
         /*--------------------------------------------Ricerca per ISBN-------------------------------------------*/
+
+        //ricerca elemento per codice ISBN
+        ElementoCatalogo elemento = dao.trovaElementoPerISBN("654169461");
+        if (elemento != null) {
+            System.out.println("Elemento trovato: " + elemento);
+        } else {
+            System.out.println("Elemento con codice ISBN non trovato.");
+        }
+
+        /*---------------------------------------------Ricerca per anno pubblicazione-------------------------------------------*/
 
     }
 }
