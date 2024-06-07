@@ -33,7 +33,6 @@ public abstract class ElementoCatalogo {
         return id;
     }
 
-
     public String getCodiceISBN() {
         return codiceISBN;
     }
