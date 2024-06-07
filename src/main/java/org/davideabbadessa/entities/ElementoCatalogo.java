@@ -22,6 +22,11 @@ public abstract class ElementoCatalogo {
     @Column(nullable = false)
     private int numeroPagine;
 
+
+    public ElementoCatalogo() {
+    }
+
+
     public ElementoCatalogo(String codiceISBN, String titolo, int annoPubblicazione, int numeroPagine) {
         this.codiceISBN = codiceISBN;
         this.titolo = titolo;

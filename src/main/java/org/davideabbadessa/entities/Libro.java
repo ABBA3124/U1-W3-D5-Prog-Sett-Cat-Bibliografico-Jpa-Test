@@ -11,6 +11,11 @@ public class Libro extends ElementoCatalogo {
     @Column(nullable = false)
     private String genere;
 
+    public Libro() {
+
+    }
+
+
     public Libro(String codiceISBN, String titolo, int annoPubblicazione, int numeroPagine, String autore, String genere) {
         super(codiceISBN, titolo, annoPubblicazione, numeroPagine);
         this.autore = autore;

@@ -27,6 +27,9 @@ public class Prestito {
     @Column
     private LocalDate dataRestituzioneEffettiva;
 
+    public Prestito() {
+    }
+
     public Prestito(Utente utente, ElementoCatalogo elementoPrestato, LocalDate dataInizioPrestito, LocalDate dataRestituzionePrevista, LocalDate dataRestituzioneEffettiva) {
         this.utente = utente;
         this.elementoPrestato = elementoPrestato;

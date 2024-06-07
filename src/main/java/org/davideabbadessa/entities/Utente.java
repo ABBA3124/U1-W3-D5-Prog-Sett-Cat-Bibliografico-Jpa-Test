@@ -22,6 +22,10 @@ public class Utente {
     @Column(nullable = false, unique = true)
     private String numeroTessera;
 
+
+    public Utente() {
+    }
+
     public Utente(String nome, String cognome, LocalDate dataNascita, String numeroTessera) {
         this.nome = nome;
         this.cognome = cognome;
