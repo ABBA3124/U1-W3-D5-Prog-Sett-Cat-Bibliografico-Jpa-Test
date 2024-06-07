@@ -133,8 +133,20 @@ public class Application {
             System.out.println("Nessun prestito trovato per numero di tessera " + utente.getNumeroTessera() + ".");
         }
 
-        /*------------------------------------------------Ricerca di tutti i prestiti scaduti e non ancora restituiti-------------------------------------------*/
+        /*-----------------------------------------------Ricerca di tutti i prestiti scaduti e non ancora restituiti-------------------------------------------*/
 
-        
+        //ricerca prestiti scaduti e non restituiti
+        List<Prestito> prestitiScaduti = prestitoDao.trovaPrestitiScadutiNonRestituiti();
+        if (prestitiScaduti != null && !prestitiScaduti.isEmpty()) {
+            System.out.println("Prestiti scaduti e non ancora restituiti:");
+            for (Prestito p : prestitiScaduti) {
+                System.out.println("- " + p.getElementoPrestato().getTitolo() + " (scaduto il " + p.getDataRestituzionePrevista() + ")");
+            }
+        } else {
+            System.out.println("Nessun prestito scaduto e non ancora restituito.");
+        }
+
+        em.close();
+        emf.close();
     }
 }

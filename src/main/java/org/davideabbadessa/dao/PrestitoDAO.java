@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.davideabbadessa.entities.Prestito;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,5 +39,16 @@ public class PrestitoDAO {
             return null;
         }
 
+    }
+
+    public List<Prestito> trovaPrestitiScadutiNonRestituiti() {
+        try {
+            return em.createQuery("SELECT p FROM Prestito p WHERE p.dataRestituzionePrevista < :oggi AND p.dataRestituzioneEffettiva IS NULL", Prestito.class)
+                    .setParameter("oggi", LocalDate.now())
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
